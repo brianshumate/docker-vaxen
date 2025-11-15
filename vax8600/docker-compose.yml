@@ -1,0 +1,24 @@
+services:
+  vax8600:
+    build: .
+    image: brianshumate/vax8600:latest
+    container_name: vax8600
+    hostname: vax8600
+    # NB: Capabilities necessary for full networking in the emulator
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    stdin_open: true
+    tty: true
+    environment:
+      - TERM=xterm-256color
+    network_mode: host
+    ports:
+      # Telnet port
+      - "8600:8600"
+    volumes:
+      - ./bin/:/vax8600/bin
+      - ./data:/vax8600/data
+      - ./logs:/vax8600/logs
+      - ./iso:/vax8600/iso
+      - ./vax8600.ini:/vax8600/vax8600.ini
