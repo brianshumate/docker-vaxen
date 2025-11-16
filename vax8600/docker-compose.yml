@@ -4,15 +4,13 @@ services:
     image: brianshumate/vax8600:latest
     container_name: vax8600
     hostname: vax8600
-    # NB: Capabilities necessary for full networking in the emulator
+    # NB: NET_ADMIN Capability necessary for full networking in the emulator
     cap_add:
-      - NET_RAW
       - NET_ADMIN
     stdin_open: true
     tty: true
     environment:
       - TERM=xterm-256color
-    network_mode: host
     ports:
       # Telnet port
       - "8600:8600"

@@ -53,8 +53,8 @@ COPY --from=builder /build/simh/BIN/vax8600 /usr/local/bin/
 # Copy runtime files as needed
 # COPY --chown=nobody:nogroup vax8600.ini /vax8600/vax8600.ini
 
-# Set necessary capabilities on binary for emulation networking
-RUN setcap 'cap_net_raw,cap_net_admin=+ep' /usr/local/bin/vax8600
+# Set necessary capability on binary for emulation networking
+RUN setcap 'cap_net_admin=+ep' /usr/local/bin/vax8600
 
 # Run as non-root user
 USER nobody
