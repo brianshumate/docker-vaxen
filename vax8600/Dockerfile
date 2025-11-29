@@ -20,9 +20,12 @@ RUN apt-get update && \
 WORKDIR /build
 # Clone Open SIMH repository and build the binary
 RUN git clone https://github.com/open-simh/simh.git
-RUN cd simh && \
-    make -j$(nproc) vax8600 && \
+
+WORKDIR /build/simh
+
+RUN make -j$(nproc) vax8600 && \
     strip ./BIN/vax8600
+RUN chmod +x ./BIN/vax8600
 
 # Final runtime stage
 FROM ubuntu:24.04
@@ -54,7 +57,7 @@ COPY --from=builder /build/simh/BIN/vax8600 /usr/local/bin/
 # COPY --chown=nobody:nogroup vax8600.ini /vax8600/vax8600.ini
 
 # Set necessary capability on binary for emulation networking
-RUN setcap 'cap_net_admin=+ep' /usr/local/bin/vax8600
+RUN setcap 'cap_net_raw+ep cap_net_admin=+ep' /usr/local/bin/vax8600
 
 # Run as non-root user
 USER nobody

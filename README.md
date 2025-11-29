@@ -15,46 +15,19 @@ This project uses [Open SIMH](https://opensimh.org/) in a Docker container to em
     git clone https://github.com/brianshumate/docker-vaxen.git
     ```
 
-1. Change into the repository directory.
+1. Change into the directory for the VAX 8600 emulation.
 
     ```shell
-    cd docker-vaxen
+    cd docker-vaxen/vax8600
     ```
 
 1. Grab the [OpenVMS 7.2 ISO](https://archive.org/details/compaq-hp-openvms-vax-7.2-hobbyist-edition-version-2.0), and place it in the `iso` directory as the file `VAXVMS072.iso`.
 
-1. Run the container with one of the following methods.
+1. Run the container with `docker-compose run`.
 
-### Run the container with docker run
-
-Use this example command line toun the container with `docker run`.
-
-```shell
-docker run \
-  --name vax8600 \
-  --hostname vax8600 \
-  --interactive \
-  --tty \
-  --cap-add=NET_ADMIN \
-  --cap-add=NET_RAW \
-  --env=TERM=xterm-256color \
-  --publish 8600:8600 \
-  --volume ./bin/:/vax8600/bin \
-  --volume ./data:/vax8600/data \
-  --volume ./logs:/vax8600/logs \
-  --volume ./iso:/vax8600/iso \
-  --volume ./vax8600.ini:/vax8600/vax8600.ini \
-  --rm \
-  brianshumate/vax8600:latest
-```
-
-### Run the container with docker compose
-
-If you prefer to use the Docker Compose file, you can run the container with `docker-compose run` instead.
-
-```shell
-docker compose run --rm vax8600
-```
+  ```shell
+  docker compose run --rm vax8600
+  ```
 
 ## Install OpenVMS VAX 7.2
 
